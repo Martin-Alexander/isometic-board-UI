@@ -1,10 +1,9 @@
 class Piece
   
-  attr_reader :type, :player, :active
+  attr_reader :type, :active
 
-  def initialize(type, player, active)
+  def initialize(type, active)
     @type = type
-    @player = player
     @active = active
   end
 

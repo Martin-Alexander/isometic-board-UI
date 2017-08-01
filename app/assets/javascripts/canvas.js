@@ -6,22 +6,28 @@ var canvas,
   unitImage,
   shieldImage;
 
-var scale = 1.2;
+var scale = 2;
 var tileWidth = 56;
 var tileHeight = 28;
 var boardData = [];
-
-var boardX = 15;
-var boardY = 15;
 
 var sourceTile = false;
 var targetTile = false;
 var tileOver;
 
-function Tile(grass, unit, structure) {
-  this.grass = grass;
-  this.unit = unit;
-  this.structure = structure;
+function Square() {
+  this.x;
+  this.y;
+  this.player;
+  this.pieces;
+  this.structure;
+  this.active,
+  this.inactive
+}
+
+function Piece(type, active) {
+  this.type = type;
+  this.active = active;
 }
 
 function initializeMouseListener() {
@@ -102,8 +108,8 @@ function drawUnit(x, y, index, active, inactive) {
   canvasContext.translate((x - y) * tileWidth / 2, (x + y) * tileHeight / 2);
   canvasContext.drawImage(unitImage, index * tileWidth, 0, tileWidth, unitImage.height,
     -tileWidth / 2, -35 / 2, tileWidth, unitImage.height);
-  drawInactiveShield(x, y, active);
-  drawActiveShield(x, y, index % 2, inactive);
+  drawInactiveShield(x, y, inactive);
+  drawActiveShield(x, y, index % 2, active);
   canvasContext.restore();  
 }
 
@@ -136,21 +142,29 @@ function drawStructure(x, y, type) {
 }
 
 function drawBoard() {
+
+  var boardX = gameData.board.meta_data.x_size;
+  var boardY = gameData.board.meta_data.y_size;
+
   canvasContext.save()
   canvasContext.scale(scale, scale);
 
   for (var i = 0; i < boardY; i++) {
     for (var j = 0; j < boardX; j++) {
       var tile = boardData[i][j];
-      drawTile(i, j, tile.grass);
+      drawTile(tile.x, tile.y, 5);
     }
   }
 
   for (var i = 0; i < boardY; i++) {
     for (var j = 0; j < boardX; j++) {
       var tile = boardData[i][j];
-      if (tile.structure != 0) {
-        drawStructure(i, j, tile.structure - 1);
+      if (tile.structure == "city") {
+        if (tile.player.id == 1) {
+          drawStructure(i, j, 3);
+        } else {
+          drawStructure(i, j, 2);
+        }
       }
     }
   }
@@ -158,21 +172,9 @@ function drawBoard() {
   for (var i = 0; i < boardY; i++) {
     for (var j = 0; j < boardX; j++) {
       var tile = boardData[i][j];
-      if (tile.structure > 2) {
-        drawStructure(i, j, tile.structure - 1);
-      }
-    }
-  }
-
-  for (var i = 0; i < boardY; i++) {
-    for (var j = 0; j < boardX; j++) {
-      var tile = boardData[i][j];
-      if (tile.unit != 0) {
-        drawUnit(i, j, tile.unit - 1, Math.floor(Math.random() * 99), Math.floor(Math.random() * 99))
-      }
-      if (sourceTile.x == j && sourceTile.y == i) {
+      if (sourceTile.x == i && sourceTile.y == j) {
         canvasContext.save();
-        canvasContext.translate((j - i) * tileWidth / 2, (j + i) * tileHeight / 2);
+        canvasContext.translate((i - j) * tileWidth / 2, (j + i) * tileHeight / 2);
         canvasContext.beginPath();
         canvasContext.moveTo(0, 0);
         canvasContext.lineTo(tileWidth / 2, tileHeight / 2);
@@ -182,10 +184,9 @@ function drawBoard() {
         canvasContext.fillStyle = "rgba(255, 255, 255, 0.8)";
         canvasContext.fill();
         canvasContext.restore();        
-      }
-      if (tileOver && tileOver.x == j && tileOver.y == i) {
+      } else if (tileOver && tileOver.x == i && tileOver.y == j) {
         canvasContext.save();
-        canvasContext.translate((j - i) * tileWidth / 2, (j + i) * tileHeight / 2);
+        canvasContext.translate((i - j) * tileWidth / 2, (j + i) * tileHeight / 2);
         canvasContext.beginPath();
         canvasContext.moveTo(0, 0);
         canvasContext.lineTo(tileWidth / 2, tileHeight / 2);
@@ -196,22 +197,55 @@ function drawBoard() {
         canvasContext.fill();
         canvasContext.restore();        
       }
+      if (tile.pieces.length != 0) {
+        if (tile.player.id == 1) {
+          if (tile.pieces[0].type == "soldier") {
+            drawUnit(i, j, 1, tile.active, tile.inactive)
+          } else {
+            drawUnit(i, j, 3, tile.active, tile.inactive)
+          }
+        } else {
+          if (tile.pieces[0].type == "soldier") {
+            drawUnit(i, j, 0, tile.active, tile.inactive)
+          } else {
+            drawUnit(i, j, 2, tile.active, tile.inactive)
+          }          
+        }
+      }
     }
   }
 
   canvasContext.restore();
 }
 
-function setBoard() {
-  for (var i = 0; i < boardY; i++) {
+function setBoard(jsonGameData) {
+  var xSize = jsonGameData.board.meta_data.x_size
+  var ySize = jsonGameData.board.meta_data.y_size
+
+  for (var y = 0; y < ySize; y++) {
     boardData.push([]);
-    for (var j = 0; j < boardX; j++) {
-      var grass = randomSample([5, 6]);
-      var unit = randomSample([0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 1, 2]);
-      var structure = randomSample([0, 0, 0,0, 0, 0, 1, 2, 3, 4]);
-      boardData[boardData.length - 1].push(new Tile(grass, unit, structure));
+    for (var x = 0; x < xSize; x++) {
+      jsonSquare = jsonGameData.board.rows[y][x]
+      newSquare = new Square();
+      newSquare.x = jsonSquare.x;
+      newSquare.y = jsonSquare.y;
+      newSquare.player = jsonSquare.player;
+      newSquare.structure = jsonSquare.structure;
+      newSquare.pieces = [];
+      newSquare.active = jsonSquare.active;
+      newSquare.inactive = jsonSquare.inactive;
+
+      for (var i = 0; i < jsonSquare.pieces.length; i++) {
+        newPiece = new Piece(
+          jsonSquare.pieces[0].type,
+          jsonSquare.pieces[0].active
+        )
+        newSquare.pieces.push(newPiece);
+      }
+      boardData[boardData.length - 1].push(newSquare);
     }
   }
+  run();
 }
 
 function randomSample(array) {
@@ -224,6 +258,20 @@ function chance(int) {
   } else {
     return false;
   }
+}
+
+var gameData;
+
+function newGame() {
+  $.ajax({
+    method: "POST",
+    url: "/new",
+    success: function(data) {
+      console.log(data);
+      gameData = data;
+      setBoard(data);
+    }
+  });
 }
 
 function clearCanvas() {
@@ -242,9 +290,7 @@ function run() {
 
 $(document).ready(function() {
   intializeCanvas();
-  setBoard();
   initializeSourceImage();
   initializeMouseListener();
-  run();
 });
 

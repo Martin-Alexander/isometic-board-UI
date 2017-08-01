@@ -1,8 +1,7 @@
 class Square
-
-  include SquareProperties
-
-  attr_reader :x, :y, :player, :structure, :pieces
+  
+  attr_reader :x, :y, :pieces
+  attr_accessor :player, :structure
 
   def initialize(x, y, player = false, structure = false)
     @x = x
@@ -77,6 +76,34 @@ class Square
   def remove_inactive(number)
     @pieces.delete_if { |piece| piece.inactive }
     update
+  end
+
+  def farm?
+    @structure == :farm
+  end
+
+  def city?
+    @structure == :city
+  end
+
+  def empty?
+    @pieces.empty?
+  end
+
+  def unowned?
+    @player == false
+  end
+
+  def active
+    count = 0
+    @pieces.each { |piece| count += 1 if piece.active? }
+    count
+  end
+
+  def inactive 
+    count = 0
+    @pieces.each { |piece| count += 1 if piece.inactive? }
+    count
   end
 
   private
