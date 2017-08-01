@@ -18,6 +18,32 @@ class Board
     @data[x][y]
   end
 
+  def initial_setup(player_one, player_two)
+    self[1, 3].player = player_one
+    self[1, 3].structure = :city
+    self[2, 3].player = player_one
+    self[2, 3].pieces << Piece.new(:worker, true)
+    self[0, 3].structure = :farm
+    self[0, 3].player = player_one
+    self[1, 4].structure = :farm
+    self[1, 4].player = player_one
+    self[1, 2].structure = :farm
+    self[1, 2].player = player_one
+
+    self[5, 3].player = player_two
+    self[5, 3].structure = :city
+    self[4, 3].player = player_two
+    10.times do
+      self[4, 3].pieces << Piece.new(:soldier, true)
+    end
+    self[6, 3].structure = :farm
+    self[6, 3].player = player_two
+    self[4, 4].structure = :farm
+    self[4, 4].player = player_two
+    self[4, 2].structure = :farm
+    self[4, 2].player = player_two
+  end
+
   private 
 
   def run_validations(x, y)

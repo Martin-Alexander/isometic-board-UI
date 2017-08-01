@@ -1,7 +1,7 @@
 class Square
   
-  attr_reader :x, :y, :pieces
-  attr_accessor :player, :structure
+  attr_reader :x, :y
+  attr_accessor :player, :structure, :pieces
 
   def initialize(x, y, player = false, structure = false)
     @x = x
@@ -106,7 +106,6 @@ class Square
     count
   end
 
-  private
 
   def update
     run_validations
@@ -114,18 +113,19 @@ class Square
       if @structure == false
         @player = false
       end
-    else
-      @player = @pieces[0].player
+    # else
+    #   @player = @pieces[0].player
     end
-
   end
 
+  private
+
   def run_validations
-    @pieces.each do |piece|
-      if piece.player != @player
-        raise StandardError.new "square/piece player missmatch at square (#{@x}, #{@y})"
-      end
-    end
+    # @pieces.each do |piece|
+    #   if piece.player != @player
+    #     raise StandardError.new "square/piece player missmatch at square (#{@x}, #{@y})"
+    #   end
+    # end
     unless @pieces.all? { |piece| piece.type == :soldier} || @pieces.all? { |piece| piece.type == :worker}
       raise StandardError.new "conflicting piece types on square (#{@x}, #{@y})"
     end
