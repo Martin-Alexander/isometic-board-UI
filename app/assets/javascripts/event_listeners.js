@@ -13,7 +13,7 @@ function initializeMouseListener() {
       x: Math.floor((isoCoords.x / scale) / tileHeight),
       y: Math.floor((isoCoords.y / scale) / tileHeight)
     }
-    console.log(tileOver.x + ", " + tileOver.y);
+    // console.log(tileOver.x + ", " + tileOver.y);
   });
 
   canvas.addEventListener("mouseup", function(event) {

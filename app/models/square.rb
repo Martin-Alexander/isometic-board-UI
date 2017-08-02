@@ -69,12 +69,26 @@ class Square
   end
 
   def remove_active(number)
-    @pieces.delete_if { |piece| piece.active }
+    counter = 0
+    @pieces.each_with_index do |piece, i| 
+      break if counter == number
+      if piece.active?
+        @pieces.delete_at(i)
+        counter += 1
+      end
+    end
     update
   end
 
   def remove_inactive(number)
-    @pieces.delete_if { |piece| piece.inactive }
+    counter = 0
+    @pieces.each_with_index do |piece, i| 
+      break if counter == number
+      if piece.inactive?
+        @pieces.delete_at(i)
+        counter += 1
+      end
+    end
     update
   end
 
@@ -108,13 +122,9 @@ class Square
 
 
   def update
-    run_validations
-    if @pieces.empty? 
-      if @structure == false
-        @player = false
-      end
-    # else
-    #   @player = @pieces[0].player
+    # run_validations
+    if @pieces.empty? && @structure == false
+      @player = false
     end
   end
 
