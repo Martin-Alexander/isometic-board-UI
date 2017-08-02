@@ -19,29 +19,33 @@ class Board
   end
 
   def initial_setup(player_one, player_two)
-    self[1, 3].player = player_one
-    self[1, 3].structure = :city
-    self[2, 3].player = player_one
-    self[2, 3].pieces << Piece.new(:worker, true)
-    self[0, 3].structure = :farm
-    self[0, 3].player = player_one
-    self[1, 4].structure = :farm
-    self[1, 4].player = player_one
-    self[1, 2].structure = :farm
-    self[1, 2].player = player_one
-
-    self[5, 3].player = player_two
-    self[5, 3].structure = :city
-    self[4, 3].player = player_two
-    10.times do
-      self[4, 3].pieces << Piece.new(:soldier, true)
+    self[2, 2].player = player_one
+    self[2, 2].structure = :city
+    10.times do 
+      self[2, 2].pieces << Piece.new(:soldier, true)
     end
-    self[6, 3].structure = :farm
-    self[6, 3].player = player_two
-    self[4, 4].structure = :farm
-    self[4, 4].player = player_two
-    self[4, 2].structure = :farm
-    self[4, 2].player = player_two
+
+    [
+      [1, 1], [1, 2], [1, 3], [2, 1], [2, 3], [3, 1], [3, 2], [3, 3],
+      [0, 1], [0, 2], [0, 3], [4, 1], [4, 2], [4, 3], [1, 0], [2, 0], [3, 0], [1, 4], [2, 4], [3, 4], [3, 4] 
+    ].each do |square|
+      self[square[0], square[1]].player = player_one
+      self[square[0], square[1]].structure = :farm
+    end
+
+    self[9, 9].player = player_two
+    self[9, 9].structure = :city
+    10.times do 
+      self[9, 9].pieces << Piece.new(:soldier, true)
+    end
+
+    [
+      [1, 1], [1, 2], [1, 3], [2, 1], [2, 3], [3, 1], [3, 2], [3, 3],
+      [0, 1], [0, 2], [0, 3], [4, 1], [4, 2], [4, 3], [1, 0], [2, 0], [3, 0], [1, 4], [2, 4], [3, 4], [3, 4] 
+    ].each do |square|
+      self[square[0] + 7, square[1] + 7].player = player_two
+      self[square[0] + 7, square[1] + 7].structure = :farm
+    end
   end
 
   private 

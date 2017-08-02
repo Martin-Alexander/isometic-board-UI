@@ -13,12 +13,12 @@ class Square
 
   def add_piece(piece)
     @pieces << piece
-    update
+    
   end
 
   def destroy_structure
     @structure = false
-    update
+    
   end
 
   def add_structure(structure_sym)
@@ -65,7 +65,7 @@ class Square
 
   def remove_all
     @pieces = []
-    update
+    
   end
 
   def remove_active(number)
@@ -73,11 +73,11 @@ class Square
     @pieces.each_with_index do |piece, i| 
       break if counter == number
       if piece.active?
-        @pieces.delete_at(i)
+        @pieces[i] = nil
         counter += 1
       end
     end
-    update
+    @pieces = @pieces.reject { |piece| piece.nil? }
   end
 
   def remove_inactive(number)
@@ -85,11 +85,11 @@ class Square
     @pieces.each_with_index do |piece, i| 
       break if counter == number
       if piece.inactive?
-        @pieces.delete_at(i)
+        @pieces[i] = nil
         counter += 1
       end
     end
-    update
+    @pieces = @pieces.reject { |piece| piece.nil? }
   end
 
   def farm?
@@ -118,26 +118,5 @@ class Square
     count = 0
     @pieces.each { |piece| count += 1 if piece.inactive? }
     count
-  end
-
-
-  def update
-    # run_validations
-    if @pieces.empty? && @structure == false
-      @player = false
-    end
-  end
-
-  private
-
-  def run_validations
-    # @pieces.each do |piece|
-    #   if piece.player != @player
-    #     raise StandardError.new "square/piece player missmatch at square (#{@x}, #{@y})"
-    #   end
-    # end
-    unless @pieces.all? { |piece| piece.type == :soldier} || @pieces.all? { |piece| piece.type == :worker}
-      raise StandardError.new "conflicting piece types on square (#{@x}, #{@y})"
-    end
   end
 end

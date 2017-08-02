@@ -1,4 +1,26 @@
 <canvas id="canvas"></canvas>
+<div><h1 style="color: blue;" id="turnplayer">Player One's Turn</h1></div>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Farms</th>
+      <th>Reinforcements</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Player One:   </td>
+      <td id="player-one-farms">20</td>
+      <td id="player-one-reinforcements">0</td>
+    </tr>
+    <tr>
+      <td>Player Two:   </td>
+      <td id="player-two-farms">20</td>
+      <td id="player-two-reinforcements">0</td>
+    </tr>
+  </tbody>
+</table>
 <%= image_tag "shields.png", id: "shields", class: "source-image" %>
 <%= image_tag "tiles.png", id: "tiles", class: "source-image" %>
 <%= image_tag "units.png", id: "units", class: "source-image" %>

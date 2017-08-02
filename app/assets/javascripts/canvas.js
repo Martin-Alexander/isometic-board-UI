@@ -11,7 +11,7 @@ function intializeCanvas() {
   canvasContext = canvas.getContext("2d");  
 
   canvasWidth = window.innerWidth - 4;
-  canvasHeight = window.innerHeight - 4;
+  canvasHeight = 650;
 
   canvas.width = canvasWidth;
   canvas.height = canvasHeight;
@@ -23,8 +23,8 @@ function setBoard(jsonGameData) {
 
   boardData = []
 
-  var xSize = jsonGameData.board.meta_data.x_size
-  var ySize = jsonGameData.board.meta_data.y_size
+  xSize = jsonGameData.board.meta_data.x_size
+  ySize = jsonGameData.board.meta_data.y_size
 
   for (var y = 0; y < ySize; y++) {
     boardData.push([]);
@@ -71,6 +71,7 @@ function newGame() {
     success: function(data) {
       gameData = data;
       setBoard(gameData);
+      setRandomGrassPattern();
     }
   });
 }

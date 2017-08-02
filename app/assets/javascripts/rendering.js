@@ -61,7 +61,13 @@ function drawBoard() {
   for (var i = 0; i < boardY; i++) {
     for (var j = 0; j < boardX; j++) {
       var tile = boardData[i][j];
-      drawTile(tile.x, tile.y, 5);
+      if (tile.structure == "farm") {
+        drawTile(tile.x, tile.y, 5);
+      } else if (grassPattern[i][j] == 1) {
+        drawTile(tile.x, tile.y, 7);
+      } else {
+        drawTile(tile.x, tile.y, 5);
+      }
     }
   }
 
@@ -103,7 +109,11 @@ function drawBoard() {
         canvasContext.lineTo(0, tileHeight);
         canvasContext.lineTo(-tileWidth / 2, tileHeight / 2);
         canvasContext.closePath();
-        canvasContext.fillStyle = "rgba(255, 255, 255, 0.8)";
+        if (reinforcementPhase) {
+          canvasContext.fillStyle = "rgba(255, 0, 0, 0.8)";  
+        } else {
+          canvasContext.fillStyle = "rgba(255, 255, 255, 0.8)";
+        }
         canvasContext.fill();
         canvasContext.restore();        
       } else if (tileOver && tileOver.x == i && tileOver.y == j) {
@@ -138,4 +148,20 @@ function drawBoard() {
   }
 
   canvasContext.restore();
+}
+
+function isPrime(num) {
+  for(var i = 2; i < num; i++)
+    if(num % i === 0) return false;
+  return num !== 1;
+}
+
+
+function setRandomGrassPattern() {
+  for (var i = 0; i < ySize; i++) {
+    grassPattern.push([]);
+    for (var j = 0; j < xSize; j++) {
+      grassPattern[grassPattern.length - 1].push(Math.floor(Math.random() * 2));
+    }
+  }
 }

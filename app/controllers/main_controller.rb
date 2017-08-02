@@ -3,9 +3,9 @@ class MainController < ApplicationController
   end
 
   def new
-    player_one = Player.new(1, true)
-    player_two = Player.new(2, false)
-    board = Board.new(7, 7)
+    player_one = Player.new(1, true, 5)
+    player_two = Player.new(2, false, 2)
+    board = Board.new(12, 12)
     board.initial_setup(player_one, player_two)
 
     game = Game.new(player_one, player_two, board)
@@ -15,11 +15,43 @@ class MainController < ApplicationController
     end
   end
 
-  def input
+  def move
     game = Game.parse_and_create(params[:game_data])
-    game.move(params[:from], params[:to])
+    game.move(params[:from], params[:to], params[:amount])
     ActionCable.server.broadcast "game_channel", {
-      game: game.stringify
+      game: game.stringify,
+      number_of_farms_player_one: game.number_of_farms(game.player_one),
+      number_of_farms_player_two: game.number_of_farms(game.player_two)
+    }
+  end
+
+  def next_turn
+    game = Game.parse_and_create(params[:game_data])
+    game.next_turn
+    ActionCable.server.broadcast "game_channel", {
+      game: game.stringify,
+      number_of_farms_player_one: game.number_of_farms(game.player_one),
+      number_of_farms_player_two: game.number_of_farms(game.player_two)
+    }
+  end
+
+  def reinforcement
+    game = Game.parse_and_create(params[:game_data])
+    game.reinforcements(params[:location], params[:type])
+    ActionCable.server.broadcast "game_channel", {
+      game: game.stringify,
+      number_of_farms_player_one: game.number_of_farms(game.player_one),
+      number_of_farms_player_two: game.number_of_farms(game.player_two)
+    }
+  end
+
+  def build
+    game = Game.parse_and_create(params[:game_data])
+    game.build(params[:location], params[:type])
+    ActionCable.server.broadcast "game_channel", {
+      game: game.stringify,
+      number_of_farms_player_one: game.number_of_farms(game.player_one),
+      number_of_farms_player_two: game.number_of_farms(game.player_two)
     }
   end
 end
