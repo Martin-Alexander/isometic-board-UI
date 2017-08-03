@@ -127,10 +127,10 @@ class Game
     end
 
     if @player_one.is_turnplayer 
-      @player_one.reinforcements += (@player_one.reinforcements / 8)
-      @player_one.reinforcements += (number_of_farms(@player_one) / 8)
+      @player_one.reinforcements += (@player_one.reinforcements / 5)
+      @player_one.reinforcements += (number_of_farms(@player_one) / 4)
     else
-      @player_two.reinforcements += (@player_two.reinforcements / 4)
+      @player_two.reinforcements += (@player_two.reinforcements / 5)
       @player_two.reinforcements += (number_of_farms(@player_two) / 4)
     end
   end
