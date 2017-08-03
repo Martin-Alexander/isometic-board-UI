@@ -34,12 +34,15 @@ class Square
   end
 
   def activate(number)
+    count = 0
     number.times do
       @pieces.each do |piece|
+        break if count >= number
         activation_has_occured = false
         if piece.inactive
           piece.activate
           activation_has_occured = true
+          counte += 1
         end
         unless activation_has_occured
           raise StandardError.new "insufficient pieces in square upon `activate` method call at square (#{@x}, #{@y})"
@@ -49,12 +52,15 @@ class Square
   end
 
   def inactivate(number)
+    count = 0
     number.times do
       @pieces.each do |piece|
+        break if count >= number
         activation_has_occured = false
         if piece.active
           piece.inactivate
           activation_has_occured = true
+          counte += 1
         end
         unless activation_has_occured
           raise StandardError.new "insufficient pieces in square upon `inactivate` method call at square (#{@x}, #{@y})"
