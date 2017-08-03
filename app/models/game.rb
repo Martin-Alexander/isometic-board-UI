@@ -121,6 +121,9 @@ class Game
         @board[x, y].activate_all
       end
     end
+    @player_one.reinforcements += (@player_one.reinforcements * 0.15)
+    @player_two.reinforcements += (@player_two.reinforcements * 0.15)
+
     if @player_one.is_turnplayer 
       @player_one.reinforcements += (number_of_farms(@player_one) / 4)
     else
