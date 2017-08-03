@@ -22,7 +22,7 @@ function initializeMouseListener() {
     } else if (reinforcementPhase) {
       sourceTile = { x: tileOver.x, y: tileOver.y }
     } else {
-      if (!sourceTile) {
+      if (!sourceTile && tileOver.x < 12 && tileOver.y < 12) {
         sourceTile = { x: tileOver.x, y: tileOver.y };
       } else if (sourceTile.x == tileOver.x && sourceTile.y == tileOver.y) {
         sourceTile = false;
