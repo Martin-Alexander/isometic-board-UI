@@ -59,8 +59,8 @@ function initializeMouseListener() {
     if (gameOver) {
       console.log("game over");
     }
-    else if ((event.keyCode == 87 || event.keyCode == 83) && reinforcementPhase) {
-      if (event.keyCode == 83) {
+    else if ((event.keyCode == 87 || event.keyCode == 32) && reinforcementPhase) {
+      if (event.keyCode == 32) {
         var typeSelected = "soldier";
       } else {
         var typeSelected = "worker";
