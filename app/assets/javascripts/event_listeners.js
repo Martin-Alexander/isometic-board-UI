@@ -17,12 +17,15 @@ function initializeMouseListener() {
   });
 
   canvas.addEventListener("mouseup", function(event) {
+    if (tileOver.x > 11 || tileOver.y > 11) {
+      return false;
+    }
     if (gameOver) {
       console.log("game over");
     } else if (reinforcementPhase) {
       sourceTile = { x: tileOver.x, y: tileOver.y }
     } else {
-      if (!sourceTile && tileOver.x < 12 && tileOver.y < 12) {
+      if (!sourceTile) {
         sourceTile = { x: tileOver.x, y: tileOver.y };
       } else if (sourceTile.x == tileOver.x && sourceTile.y == tileOver.y) {
         sourceTile = false;
@@ -43,20 +46,12 @@ function initializeMouseListener() {
             game_data: JSON.stringify(gameData),
             amount: amountSelected,
             key: my_key
-          },
-          success: function() {
-            // console.log(
-            //   "From: " + 
-            //   sourceTile.x + ", " + sourceTile.y +
-            //   " To: " +
-            //   targetTile.x + ", " + targetTile.y
-            // );
-            if (!(ctrlDown && shiftDown)) {
-              sourceTile = false;
-            }
-            targetTile = false;
           }
         });
+        if (!(ctrlDown && shiftDown)) {
+          sourceTile = false;
+        }
+        targetTile = false;
       }
     }
   });
@@ -85,9 +80,6 @@ function initializeMouseListener() {
           game_data: JSON.stringify(gameData),
           key: my_key
         }
-        // success: function() {
-        //   sourceTile = false;
-        // }
       });
     } else if (event.keyCode == 82) {
       reinforcementPhase = !reinforcementPhase;
@@ -110,11 +102,9 @@ function initializeMouseListener() {
           type: typeSelected,
           game_data: JSON.stringify(gameData),
           key: my_key
-        },
-        success: function() {
-          sourceTile = false;
         }
       });      
+      sourceTile = false;
     } else if (event.keyCode == 17) {
       ctrlDown = false;
     } else if (event.keyCode == 16) {
