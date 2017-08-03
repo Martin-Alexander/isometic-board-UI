@@ -17,46 +17,54 @@ class MainController < ApplicationController
 
   def move
     game = Game.parse_and_create(params[:game_data])
-    game.move(params[:from], params[:to], params[:amount])
-    winner = 0
-    if game.winner
-      winner = game.winner
+    if game.player_two.is_turnplayer && params[:key].to_i == 6666
+      game.move(params[:from], params[:to], params[:amount])
+      winner = 0
+      if game.winner
+        winner = game.winner
+      end
+      ActionCable.server.broadcast "game_channel", {
+        game: game.stringify,
+        number_of_farms_player_one: game.number_of_farms(game.player_one),
+        number_of_farms_player_two: game.number_of_farms(game.player_two),
+        winner: winner
+      }
     end
-    ActionCable.server.broadcast "game_channel", {
-      game: game.stringify,
-      number_of_farms_player_one: game.number_of_farms(game.player_one),
-      number_of_farms_player_two: game.number_of_farms(game.player_two),
-      winner: winner
-    }
   end
 
   def next_turn
     game = Game.parse_and_create(params[:game_data])
-    game.next_turn
-    ActionCable.server.broadcast "game_channel", {
-      game: game.stringify,
-      number_of_farms_player_one: game.number_of_farms(game.player_one),
-      number_of_farms_player_two: game.number_of_farms(game.player_two)
-    }
+    if game.player_two.is_turnplayer && params[:key].to_i == 6666
+      game.next_turn
+      ActionCable.server.broadcast "game_channel", {
+        game: game.stringify,
+        number_of_farms_player_one: game.number_of_farms(game.player_one),
+        number_of_farms_player_two: game.number_of_farms(game.player_two)
+      }
+    end
   end
 
   def reinforcement
     game = Game.parse_and_create(params[:game_data])
-    game.reinforcements(params[:location], params[:type], params[:amount])
-    ActionCable.server.broadcast "game_channel", {
-      game: game.stringify,
-      number_of_farms_player_one: game.number_of_farms(game.player_one),
-      number_of_farms_player_two: game.number_of_farms(game.player_two)
-    }
+    if game.player_two.is_turnplayer && params[:key].to_i == 6666
+      game.reinforcements(params[:location], params[:type], params[:amount])
+      ActionCable.server.broadcast "game_channel", {
+        game: game.stringify,
+        number_of_farms_player_one: game.number_of_farms(game.player_one),
+        number_of_farms_player_two: game.number_of_farms(game.player_two)
+      }
+    end
   end
 
   def build
     game = Game.parse_and_create(params[:game_data])
-    game.build(params[:location], params[:type])
-    ActionCable.server.broadcast "game_channel", {
-      game: game.stringify,
-      number_of_farms_player_one: game.number_of_farms(game.player_one),
-      number_of_farms_player_two: game.number_of_farms(game.player_two)
-    }
+    if game.player_two.is_turnplayer && params[:key].to_i == 6666
+      game.build(params[:location], params[:type])
+      ActionCable.server.broadcast "game_channel", {
+        game: game.stringify,
+        number_of_farms_player_one: game.number_of_farms(game.player_one),
+        number_of_farms_player_two: game.number_of_farms(game.player_two)
+      }
+    end
   end
 end

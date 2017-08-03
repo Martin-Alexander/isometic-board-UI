@@ -41,7 +41,8 @@ function initializeMouseListener() {
             from: sourceTile,
             to: targetTile,
             game_data: JSON.stringify(gameData),
-            amount: amountSelected
+            amount: amountSelected,
+            key: my_key
           },
           success: function() {
             // console.log(
@@ -81,7 +82,8 @@ function initializeMouseListener() {
           location: sourceTile,
           type: typeSelected,
           amount: amountSelected,
-          game_data: JSON.stringify(gameData)
+          game_data: JSON.stringify(gameData),
+          key: my_key
         }
         // success: function() {
         //   sourceTile = false;
@@ -106,7 +108,8 @@ function initializeMouseListener() {
         data: {
           location: sourceTile,
           type: typeSelected,
-          game_data: JSON.stringify(gameData)
+          game_data: JSON.stringify(gameData),
+          key: my_key
         },
         success: function() {
           sourceTile = false;
@@ -141,7 +144,8 @@ function nextTurn() {
     method: "POST",
     url: "/next_turn",
     data: {
-      game_data: JSON.stringify(gameData)
+      game_data: JSON.stringify(gameData),
+      key: my_key
     },
     success: function() {
       sourceTile = false;
