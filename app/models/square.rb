@@ -44,9 +44,9 @@ class Square
           activation_has_occured = true
           count += 1
         end
-        unless activation_has_occured
-          raise StandardError.new "insufficient pieces in square upon `activate` method call at square (#{@x}, #{@y})"
-        end
+        # unless activation_has_occured
+        #   raise StandardError.new "insufficient pieces in square upon `activate` method call at square (#{@x}, #{@y})"
+        # end
       end
     end
   end
@@ -62,9 +62,9 @@ class Square
           activation_has_occured = true
           count += 1
         end
-        unless activation_has_occured
-          raise StandardError.new "insufficient pieces in square upon `inactivate` method call at square (#{@x}, #{@y})"
-        end
+        # unless activation_has_occured
+        #   raise StandardError.new "insufficient pieces in square upon `inactivate` method call at square (#{@x}, #{@y})"
+        # end
       end
     end    
   end
