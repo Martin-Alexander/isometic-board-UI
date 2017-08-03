@@ -42,7 +42,7 @@ class MainController < ApplicationController
 
   def reinforcement
     game = Game.parse_and_create(params[:game_data])
-    game.reinforcements(params[:location], params[:type])
+    game.reinforcements(params[:location], params[:type], params[:amount])
     ActionCable.server.broadcast "game_channel", {
       game: game.stringify,
       number_of_farms_player_one: game.number_of_farms(game.player_one),

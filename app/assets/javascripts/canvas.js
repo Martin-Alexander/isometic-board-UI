@@ -95,5 +95,8 @@ $(document).ready(function() {
   initializeSourceImage();
   initializeMouseListener();
   newGame();
+  document.getElementById('canvas').onmousedown = function(){
+    return false;
+  };  
 });
 

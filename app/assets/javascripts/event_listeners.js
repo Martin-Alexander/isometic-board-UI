@@ -28,9 +28,9 @@ function initializeMouseListener() {
         sourceTile = false;
         targetTile = false;
       } else {
-        if (ctrlDown) {
+        if (ctrlDown && !shiftDown) {
           var amountSelected = "half"
-        } else if (shiftDown) {
+        } else if (shiftDown && !ctrlDown) {
           var amountSelected = "all"
         }
         targetTile = { x: tileOver.x, y: tileOver.y };
@@ -50,7 +50,9 @@ function initializeMouseListener() {
             //   " To: " +
             //   targetTile.x + ", " + targetTile.y
             // );
-            sourceTile = false;
+            if (!(ctrlDown && shiftDown)) {
+              sourceTile = false;
+            }
             targetTile = false;
           }
         });
@@ -67,12 +69,18 @@ function initializeMouseListener() {
       } else {
         var typeSelected = "worker";
       }
+      if (shiftDown) {
+        var amountSelected = "all";
+      } else {
+        var amountSelected = "one";
+      }
       $.ajax({
         method: "POST",
         url: "/reinforcement",
         data: {
           location: sourceTile,
           type: typeSelected,
+          amount: amountSelected,
           game_data: JSON.stringify(gameData)
         }
       });
