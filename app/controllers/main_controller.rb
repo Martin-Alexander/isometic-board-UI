@@ -17,7 +17,7 @@ class MainController < ApplicationController
 
   def move
     game = Game.parse_and_create(params[:game_data])
-    if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || (game.player_one.is_turnplayer && params[:key].to_i == 4321)
+    # if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || (game.player_one.is_turnplayer && params[:key].to_i == 4321)
       game.move(params[:from], params[:to], params[:amount])
       winner = 0
       if game.winner
@@ -29,42 +29,42 @@ class MainController < ApplicationController
         number_of_farms_player_two: game.number_of_farms(game.player_two),
         winner: winner
       }
-    end
+    # end
   end
 
   def next_turn
     game = Game.parse_and_create(params[:game_data])
-    if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || (game.player_one.is_turnplayer && params[:key].to_i == 4321)
+    # if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || (game.player_one.is_turnplayer && params[:key].to_i == 4321)
       game.next_turn
       ActionCable.server.broadcast "game_channel", {
         game: game.stringify,
         number_of_farms_player_one: game.number_of_farms(game.player_one),
         number_of_farms_player_two: game.number_of_farms(game.player_two)
       }
-    end
+    # end
   end
 
   def reinforcement
     game = Game.parse_and_create(params[:game_data])
-    if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || (game.player_one.is_turnplayer && params[:key].to_i == 4321)
+    # if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || (game.player_one.is_turnplayer && params[:key].to_i == 4321)
       game.reinforcements(params[:location], params[:type], params[:amount])
       ActionCable.server.broadcast "game_channel", {
         game: game.stringify,
         number_of_farms_player_one: game.number_of_farms(game.player_one),
         number_of_farms_player_two: game.number_of_farms(game.player_two)
       }
-    end
+    # end
   end
 
   def build
     game = Game.parse_and_create(params[:game_data])
-    if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || (game.player_one.is_turnplayer && params[:key].to_i == 4321)
+    # if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || (game.player_one.is_turnplayer && params[:key].to_i == 4321)
       game.build(params[:location], params[:type])
       ActionCable.server.broadcast "game_channel", {
         game: game.stringify,
         number_of_farms_player_one: game.number_of_farms(game.player_one),
         number_of_farms_player_two: game.number_of_farms(game.player_two)
       }
-    end
+    # end
   end
 end
