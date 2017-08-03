@@ -1,64 +1,68 @@
-<canvas id="canvas"></canvas>
-<div><h1 style="color: blue;" id="turnplayer">Player One's Turn</h1></div>
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th>Farms</th>
-      <th>Reinforcements</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Player One:   </td>
-      <td id="player-one-farms">20</td>
-      <td id="player-one-reinforcements">5</td>
-    </tr>
-    <tr>
-      <td>Player Two:   </td>
-      <td id="player-two-farms">20</td>
-      <td id="player-two-reinforcements">0</td>
-    </tr>
-  </tbody>
-</table>
+<div id="main">
+  <div id="sidebar">
+    <div><h1 style="color: blue;" id="turnplayer">Player One's Turn</h1></div>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Farms</th>
+          <th>Reinforcements</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Player One:   </td>
+          <td id="player-one-farms">20</td>
+          <td id="player-one-reinforcements">5</td>
+        </tr>
+        <tr>
+          <td>Player Two:   </td>
+          <td id="player-two-farms">20</td>
+          <td id="player-two-reinforcements">0</td>
+        </tr>
+      </tbody>
+    </table>
 
-<h2>Controls:</h2>
-<table>
-  <tbody>
-    <tr>
-      <td>Next Turn:</td>
-      <td>N</td>
-    </tr>
-    <tr>
-      <td>Toggle reinforcement mode:</td>
-      <td>R</td>
-    </tr>
-    <tr>
-      <td>Move all:</td>
-      <td>Shift + Click</td>
-    </tr>
-    <tr>
-      <td>Move half:</td>
-      <td>Ctrl + Click</td>
-    </tr>    
-    <tr>
-      <td>Train soldier:</td>
-      <td>S</td>
-    </tr>
-    <tr>
-      <td>Train worker:</td>
-      <td>W</td>
-    </tr>
-    <tr>
-      <td>Build base:</td>
-      <td>B</td>
-    </tr>      
-    <tr>
-      <td>Build farm:</td>
-      <td>F</td>
-    </tr>  
-  </tbody>
-</table>
+    <h2>Controls:</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td>Next Turn:</td>
+          <td>N</td>
+        </tr>
+        <tr>
+          <td>Toggle reinforcement mode:</td>
+          <td>R</td>
+        </tr>
+        <tr>
+          <td>Move all:</td>
+          <td>Shift + Click</td>
+        </tr>
+        <tr>
+          <td>Move half:</td>
+          <td>Ctrl + Click</td>
+        </tr>    
+        <tr>
+          <td>Train soldier:</td>
+          <td>S</td>
+        </tr>
+        <tr>
+          <td>Train worker:</td>
+          <td>W</td>
+        </tr>
+        <tr>
+          <td>Build base:</td>
+          <td>B</td>
+        </tr>      
+        <tr>
+          <td>Build farm:</td>
+          <td>F</td>
+        </tr>  
+      </tbody>
+    </table>
+  </div>
+  <canvas id="canvas"></canvas>
+</div>
 <%= image_tag "shields.png", id: "shields", class: "source-image" %>
 <%= image_tag "tiles.png", id: "tiles", class: "source-image" %>
 <%= image_tag "units.png", id: "units", class: "source-image" %>

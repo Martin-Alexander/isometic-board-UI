@@ -115,8 +115,12 @@ function initializeMouseListener() {
       shiftDown = false;
     } else if (event.keyCode == 187) {
       scale = scale + 0.1;
+      canvas.height = canvas.height * 1.1;
+      canvasContext.translate(canvas.width / 2, 50);
     } else if (event.keyCode == 189) {
       scale = scale - 0.1;
+      canvas.height = canvas.height / 1.1;
+      canvasContext.translate(canvas.width / 2, 50);
     }
   });
 
