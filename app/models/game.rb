@@ -32,7 +32,7 @@ class Game
       elsif !to_square.empty? && from_square.player != to_square.player && from_square.pieces[0].type == :soldier && to_square.pieces[0].type == :worker
         # Raid
         to_square.remove_all
-        from_square.inactivate_all
+        from_square.inactivate(1)
         if to_square.structure == false
           to_square.player = false
         end
@@ -40,7 +40,7 @@ class Game
         # Pillage
         to_square.structure = false
         to_square.player = false
-        from_square.inactivate_all
+        from_square.inactivate(1)
         @winner = winner
       elsif to_square.unowned? || (to_square.active + to_square.inactive < 99 && !from_square.empty? && !to_square.empty? && from_square.pieces[0].type == to_square.pieces[0].type && from_square.player == to_square.player) || (to_square.empty? && to_square.player == from_square.player)
         # Move
@@ -121,12 +121,12 @@ class Game
         @board[x, y].activate_all
       end
     end
-    @player_one.reinforcements += (@player_one.reinforcements / 8)
-    @player_two.reinforcements += (@player_two.reinforcements / 8)
 
     if @player_one.is_turnplayer 
+      @player_one.reinforcements += (@player_one.reinforcements / 8)
       @player_one.reinforcements += (number_of_farms(@player_one) / 4)
     else
+      @player_two.reinforcements += (@player_two.reinforcements / 8)
       @player_two.reinforcements += (number_of_farms(@player_two) / 4)
     end
   end
@@ -142,6 +142,18 @@ class Game
     end
     counter
   end
+
+  def number_of_city(player) 
+    counter = 0
+    (0...@board.y_size).each do |y|
+      (0...@board.x_size).each do |x|
+        if @board[x, y].player == player && @board[x, y].structure == :city
+          counter += 1
+        end
+      end
+    end
+    counter
+  end  
 
   def fight_losses(my_strength, opponents_strength)
     if my_strength <= opponents_strength
