@@ -17,7 +17,7 @@ class MainController < ApplicationController
 
   def move
     game = Game.parse_and_create(params[:game_data])
-    if game.player_two.is_turnplayer && params[:key].to_i == 6666
+    if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || game.player_one.is_turnplayer
       game.move(params[:from], params[:to], params[:amount])
       winner = 0
       if game.winner
@@ -34,7 +34,7 @@ class MainController < ApplicationController
 
   def next_turn
     game = Game.parse_and_create(params[:game_data])
-    if game.player_two.is_turnplayer && params[:key].to_i == 6666
+    if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || game.player_one.is_turnplayer
       game.next_turn
       ActionCable.server.broadcast "game_channel", {
         game: game.stringify,
@@ -46,7 +46,7 @@ class MainController < ApplicationController
 
   def reinforcement
     game = Game.parse_and_create(params[:game_data])
-    if game.player_two.is_turnplayer && params[:key].to_i == 6666
+    if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || game.player_one.is_turnplayer
       game.reinforcements(params[:location], params[:type], params[:amount])
       ActionCable.server.broadcast "game_channel", {
         game: game.stringify,
@@ -58,7 +58,7 @@ class MainController < ApplicationController
 
   def build
     game = Game.parse_and_create(params[:game_data])
-    if game.player_two.is_turnplayer && params[:key].to_i == 6666
+    if (game.player_two.is_turnplayer && params[:key].to_i == 6666) || game.player_one.is_turnplayer
       game.build(params[:location], params[:type])
       ActionCable.server.broadcast "game_channel", {
         game: game.stringify,
