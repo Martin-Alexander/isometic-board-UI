@@ -92,10 +92,14 @@ class Game
     type = type.to_sym
     square = @board[coords['x'].to_i, coords['y'].to_i]
     if square.player.is_turnplayer && square.structure == :city && square.player.reinforcements > 0 && (square.empty? || square.pieces[0].type == type) && square.pieces.length < 99
-      if amount == "all" && (square.player.reinforcements + square.pieces.length) <= 99
-        number = square.player.reinforcements
-      else 
-        number = 99 - square.pieces.length
+      if amount == "all" 
+        if(square.player.reinforcements + square.pieces.length) <= 99
+          number = square.player.reinforcements
+        else 
+          number = 99 - square.pieces.length
+        end
+      else
+        number = 1
       end
       number.times do
         square.add_piece(Piece.new(type, true))
