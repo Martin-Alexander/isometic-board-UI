@@ -83,6 +83,9 @@ function initializeMouseListener() {
           amount: amountSelected,
           game_data: JSON.stringify(gameData)
         }
+        // success: function() {
+        //   sourceTile = false;
+        // }
       });
     } else if (event.keyCode == 82) {
       reinforcementPhase = !reinforcementPhase;

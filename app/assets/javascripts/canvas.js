@@ -10,7 +10,7 @@ function intializeCanvas() {
   canvas = document.getElementById("canvas");
   canvasContext = canvas.getContext("2d");  
 
-  canvasWidth = window.innerWidth * 0.75;
+  canvasWidth = window.innerWidth - 350;
   canvasHeight = 670;
 
   canvas.width = canvasWidth;
