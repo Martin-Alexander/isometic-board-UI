@@ -7,6 +7,7 @@ class Game
     @player_one = player_one
     @player_two = player_two
     @board = board
+    @winner = 0
   end
 
   def move(from_coords, to_coords, amount)
@@ -40,6 +41,7 @@ class Game
         to_square.structure = false
         to_square.player = false
         from_square.inactivate_all
+        @winner = winner
       elsif to_square.unowned? || (to_square.active + to_square.inactive < 99 && !from_square.empty? && !to_square.empty? && from_square.pieces[0].type == to_square.pieces[0].type && from_square.player == to_square.player) || (to_square.empty? && to_square.player == from_square.player)
         # Move
         if amount == "all"
@@ -62,6 +64,27 @@ class Game
           from_square.player = false 
         end
       end
+    end
+  end
+
+  def winner
+    player_one_city_count = 0
+    player_two_city_count = 0
+    (0...@board.y_size).each do |y|
+      (0...@board.x_size).each do |x|
+        if @board[x, y].structure == :city && @board[x, y].player == @player_one
+          player_one_city_count += 1
+        elsif @board[x, y].structure == :city && @board[x, y].player == @player_two
+          player_two_city_count += 1
+        end
+      end
+    end
+    if player_one_city_count == 0
+      return 2
+    elsif player_two_city_count == 0
+      return 1
+    else
+      return 0
     end
   end
 

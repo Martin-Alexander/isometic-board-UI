@@ -17,7 +17,9 @@ function initializeMouseListener() {
   });
 
   canvas.addEventListener("mouseup", function(event) {
-    if (reinforcementPhase) {
+    if (gameOver) {
+      console.log("game over");
+    } else if (reinforcementPhase) {
       sourceTile = { x: tileOver.x, y: tileOver.y }
     } else {
       if (!sourceTile) {
@@ -42,12 +44,12 @@ function initializeMouseListener() {
             amount: amountSelected
           },
           success: function() {
-            console.log(
-              "From: " + 
-              sourceTile.x + ", " + sourceTile.y +
-              " To: " +
-              targetTile.x + ", " + targetTile.y
-            );
+            // console.log(
+            //   "From: " + 
+            //   sourceTile.x + ", " + sourceTile.y +
+            //   " To: " +
+            //   targetTile.x + ", " + targetTile.y
+            // );
             sourceTile = false;
             targetTile = false;
           }
@@ -56,7 +58,10 @@ function initializeMouseListener() {
     }
   });
   window.addEventListener("keyup", function(event) {
-    if ((event.keyCode == 87 || event.keyCode == 83) && reinforcementPhase) {
+    if (gameOver) {
+      console.log("game over");
+    }
+    else if ((event.keyCode == 87 || event.keyCode == 83) && reinforcementPhase) {
       if (event.keyCode == 83) {
         var typeSelected = "soldier";
       } else {
@@ -100,6 +105,10 @@ function initializeMouseListener() {
       ctrlDown = false;
     } else if (event.keyCode == 16) {
       shiftDown = false;
+    } else if (event.keyCode == 187) {
+      scale = scale + 0.1;
+    } else if (event.keyCode == 189) {
+      scale = scale - 0.1;
     }
   });
 

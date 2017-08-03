@@ -17,6 +17,7 @@ var grassPattern = [];
 var reinforcementPhase = false;
 var ctrlDown = false;
 var shiftDown = false;
+var gameOver = false;
 
 var sourceTile = false;
 var targetTile = false;

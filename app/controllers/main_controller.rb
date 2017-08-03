@@ -4,7 +4,7 @@ class MainController < ApplicationController
 
   def new
     player_one = Player.new(1, true, 5)
-    player_two = Player.new(2, false, 2)
+    player_two = Player.new(2, false, 0)
     board = Board.new(12, 12)
     board.initial_setup(player_one, player_two)
 
@@ -18,10 +18,15 @@ class MainController < ApplicationController
   def move
     game = Game.parse_and_create(params[:game_data])
     game.move(params[:from], params[:to], params[:amount])
+    winner = 0
+    if game.winner
+      winner = game.winner
+    end
     ActionCable.server.broadcast "game_channel", {
       game: game.stringify,
       number_of_farms_player_one: game.number_of_farms(game.player_one),
-      number_of_farms_player_two: game.number_of_farms(game.player_two)
+      number_of_farms_player_two: game.number_of_farms(game.player_two),
+      winner: winner
     }
   end
 

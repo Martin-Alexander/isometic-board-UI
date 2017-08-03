@@ -16,7 +16,7 @@ function drawUnit(x, y, index, active, inactive) {
 
   canvasContext.translate((x - y) * tileWidth / 2, (x + y) * tileHeight / 2);
   canvasContext.drawImage(unitImage, index * tileWidth, 0, tileWidth, unitImage.height,
-    -tileWidth / 2, -35 / 2, tileWidth, unitImage.height);
+    -tileWidth / 2, -30 / 2, tileWidth - 5, unitImage.height - 5);
   drawInactiveShield(x, y, inactive);
   drawActiveShield(x, y, index % 2, active);
   canvasContext.restore();  
@@ -24,19 +24,19 @@ function drawUnit(x, y, index, active, inactive) {
 
 function drawActiveShield(x, y, index, active) {
   canvasContext.drawImage(shieldImage, index * 14, 0, 14, tileImage.height,
-    3, -2, 14, tileImage.height);
+    1, -2, 14, tileImage.height);
   canvasContext.fillStyle = "white";
   canvasContext.font = "9px monospace";
-  canvasContext.fillText(active, 5, 7);
+  canvasContext.fillText(active, 2, 7);
 }
 
 function drawInactiveShield(x, y, inactive) {
 
   canvasContext.drawImage(shieldImage, 28, 0, 14, tileImage.height,
-    8, -12, 14, tileImage.height);
+    6, -12, 14, tileImage.height);
   canvasContext.fillStyle = "black";
   canvasContext.font = "9px monospace";
-  canvasContext.fillText(inactive, 10, -3);
+  canvasContext.fillText(inactive, 7, -3);
 }
 
 function drawStructure(x, y, type) {
@@ -61,12 +61,13 @@ function drawBoard() {
   for (var i = 0; i < boardY; i++) {
     for (var j = 0; j < boardX; j++) {
       var tile = boardData[i][j];
-      if (tile.structure == "farm") {
+      // if (tile.structure == "farm") {
+      //   drawTile(tile.x, tile.y, 6);
+      // } else 
+      if (grassPattern[i][j] == 1) {
         drawTile(tile.x, tile.y, 5);
-      } else if (grassPattern[i][j] == 1) {
-        drawTile(tile.x, tile.y, 7);
       } else {
-        drawTile(tile.x, tile.y, 5);
+        drawTile(tile.x, tile.y, 6);
       }
     }
   }
@@ -161,7 +162,11 @@ function setRandomGrassPattern() {
   for (var i = 0; i < ySize; i++) {
     grassPattern.push([]);
     for (var j = 0; j < xSize; j++) {
-      grassPattern[grassPattern.length - 1].push(Math.floor(Math.random() * 2));
+      if (chance(3)) {
+        grassPattern[grassPattern.length - 1].push(1);
+      } else {
+        grassPattern[grassPattern.length - 1].push(0);
+      }
     }
   }
 }

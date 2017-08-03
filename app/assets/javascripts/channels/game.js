@@ -13,5 +13,12 @@ App.game = App.cable.subscriptions.create("GameChannel", {
     $("#player-two-reinforcements").text(gameData.players.player_two.reinforcements);
     $("#player-one-farms").text(data.number_of_farms_player_one);
     $("#player-two-farms").text(data.number_of_farms_player_two);
+    if (data.winner == 1) {
+      $("#turnplayer").text("Player One Wins!").css({"color" : "blue"});
+      gameOver = true;
+    } else if (data.winner == 2) {
+      $("#turnplayer").text("Player Two Wins!").css({"color" : "red"});
+      gameOver = true;
+    }
   }
 });
