@@ -108,7 +108,7 @@ class Game
     type = type.to_sym
     square = @board[coords['x'].to_i, coords['y'].to_i]
     if square.player.is_turnplayer && !square.structure && square.pieces[0].type == :worker && square.active > 3
-      square.remove_active(1)
+      square.remove_active(4)
       square.structure = type
     end    
   end
