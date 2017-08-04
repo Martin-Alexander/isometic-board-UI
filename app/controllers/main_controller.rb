@@ -25,6 +25,8 @@ class MainController < ApplicationController
       end
       ActionCable.server.broadcast "game_channel", {
         game: game.stringify,
+        number_of_bases_player_one: game.number_of_cities(game.player_one),
+        number_of_bases_player_two: game.number_of_cities(game.player_two),
         number_of_farms_player_one: game.number_of_farms(game.player_one),
         number_of_farms_player_two: game.number_of_farms(game.player_two),
         winner: winner
@@ -38,6 +40,8 @@ class MainController < ApplicationController
       game.next_turn
       ActionCable.server.broadcast "game_channel", {
         game: game.stringify,
+        number_of_bases_player_one: game.number_of_cities(game.player_one),
+        number_of_bases_player_two: game.number_of_cities(game.player_two),
         number_of_farms_player_one: game.number_of_farms(game.player_one),
         number_of_farms_player_two: game.number_of_farms(game.player_two)
       }
@@ -50,6 +54,8 @@ class MainController < ApplicationController
       game.reinforcements(params[:location], params[:type], params[:amount])
       ActionCable.server.broadcast "game_channel", {
         game: game.stringify,
+        number_of_bases_player_one: game.number_of_cities(game.player_one),
+        number_of_bases_player_two: game.number_of_cities(game.player_two),
         number_of_farms_player_one: game.number_of_farms(game.player_one),
         number_of_farms_player_two: game.number_of_farms(game.player_two)
       }
@@ -62,6 +68,8 @@ class MainController < ApplicationController
       game.build(params[:location], params[:type])
       ActionCable.server.broadcast "game_channel", {
         game: game.stringify,
+        number_of_bases_player_one: game.number_of_cities(game.player_one),
+        number_of_bases_player_two: game.number_of_cities(game.player_two),
         number_of_farms_player_one: game.number_of_farms(game.player_one),
         number_of_farms_player_two: game.number_of_farms(game.player_two)
       }
@@ -77,6 +85,8 @@ class MainController < ApplicationController
     end
     ActionCable.server.broadcast "game_channel", {
       game: game.stringify,
+      number_of_bases_player_one: game.number_of_cities(game.player_one),
+      number_of_bases_player_two: game.number_of_cities(game.player_two),
       number_of_farms_player_one: game.number_of_farms(game.player_one),
       number_of_farms_player_two: game.number_of_farms(game.player_two),
       winner: winner
