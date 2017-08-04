@@ -134,11 +134,11 @@ class Game
     if @player_one.is_turnplayer 
       @player_one.reinforcements += (@player_one.reinforcements / 20)
       @player_one.reinforcements += (number_of_farms(@player_one) / 4)
-      @player_one.reinforcements -= number_of_farms(@player_one)
+      @player_one.reinforcements -= number_of_cities(@player_one)
     else
       @player_two.reinforcements += (@player_two.reinforcements / 20)
       @player_two.reinforcements += (number_of_farms(@player_two) / 4)
-      @player_two.reinforcements -= number_of_farms(@player_two)
+      @player_two.reinforcements -= number_of_cities(@player_two)
     end
   end
 
@@ -165,7 +165,7 @@ class Game
     counter
   end
 
-  def number_of_city(player) 
+  def number_of_cities(player) 
     counter = 0
     (0...@board.y_size).each do |y|
       (0...@board.x_size).each do |x|
