@@ -16,27 +16,28 @@ function drawUnit(x, y, index, active, inactive) {
 
   canvasContext.translate((x - y) * tileWidth / 2, (x + y) * tileHeight / 2);
   canvasContext.drawImage(unitImage, index * tileWidth, 0, tileWidth, unitImage.height,
-    -tileWidth / 2, -30 / 2, tileWidth - 5, unitImage.height - 5);
+    -tileWidth / 2 + 3, -10, tileWidth - 8, unitImage.height - 8);
   drawInactiveShield(x, y, inactive);
   drawActiveShield(x, y, index % 2, active);
   canvasContext.restore();  
 }
 
 function drawActiveShield(x, y, index, active) {
+
   canvasContext.drawImage(shieldImage, index * 14, 0, 14, tileImage.height,
-    1, -2, 14, tileImage.height);
+    -1, 4, 14, tileImage.height - 2);
   canvasContext.fillStyle = "white";
   canvasContext.font = "9px monospace";
-  canvasContext.fillText(active, 2, 7);
+  canvasContext.fillText(active, 0, 14);
 }
 
 function drawInactiveShield(x, y, inactive) {
 
   canvasContext.drawImage(shieldImage, 28, 0, 14, tileImage.height,
-    6, -12, 14, tileImage.height);
+    4, -8, 14, tileImage.height - 2);
   canvasContext.fillStyle = "black";
   canvasContext.font = "9px monospace";
-  canvasContext.fillText(inactive, 7, -3);
+  canvasContext.fillText(inactive, 5, 2);
 }
 
 function drawStructure(x, y, type) {
@@ -61,13 +62,13 @@ function drawBoard() {
   for (var i = 0; i < boardY; i++) {
     for (var j = 0; j < boardX; j++) {
       var tile = boardData[i][j];
-      // if (tile.structure == "farm") {
-      //   drawTile(tile.x, tile.y, 6);
-      // } else 
-      if (grassPattern[i][j] == 1) {
-        drawTile(tile.x, tile.y, 5);
-      } else {
+      if (tile.structure == "farm") {
         drawTile(tile.x, tile.y, 6);
+      } else {
+      // if (grassPattern[i][j] == 1) {
+      //   drawTile(tile.x, tile.y, 5);
+      // } else {
+        drawTile(tile.x, tile.y, 5);
       }
     }
   }
