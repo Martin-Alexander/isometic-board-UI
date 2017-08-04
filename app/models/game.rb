@@ -127,12 +127,25 @@ class Game
     end
 
     if @player_one.is_turnplayer 
-      @player_one.reinforcements += (@player_one.reinforcements / 5)
+      @player_one.reinforcements += (@player_one.reinforcements / 10)
       @player_one.reinforcements += (number_of_farms(@player_one) / 4)
+      @player_one.reinforcements -= number_of_farms(@player_one)
     else
-      @player_two.reinforcements += (@player_two.reinforcements / 5)
+      @player_two.reinforcements += (@player_two.reinforcements / 10)
       @player_two.reinforcements += (number_of_farms(@player_two) / 4)
+      @player_two.reinforcements -= number_of_farms(@player_two)
     end
+  end
+
+  def delete(coords) 
+    square = @board[coords['x'].to_i, coords['y'].to_i]
+    if square.player.is_turnplayer
+      square.structure = false
+      if square.empty?
+        square.player = false
+      end
+    end
+    @winner = winner
   end
 
   def number_of_farms(player) 

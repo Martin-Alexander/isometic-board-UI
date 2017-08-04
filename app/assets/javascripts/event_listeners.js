@@ -117,6 +117,16 @@ function initializeMouseListener() {
       scale = scale - 0.1;
       canvas.height = canvas.height / 1.1;
       canvasContext.translate(canvas.width / 2, 50);
+    } else if (event.keyCode == 46) {
+      $.ajax({
+        method: "POST",
+        url: "/delete",
+        data: {
+          location: sourceTile,
+          game_data: JSON.stringify(gameData),
+          key: my_key
+        }
+      });       
     }
   });
 

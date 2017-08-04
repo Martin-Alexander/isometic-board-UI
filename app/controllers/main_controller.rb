@@ -67,4 +67,19 @@ class MainController < ApplicationController
       }
     # end
   end
+
+  def delete
+    game = Game.parse_and_create(params[:game_data])
+    game.delete(params[:location])
+    winner = 0
+    if game.winner
+      winner = game.winner
+    end
+    ActionCable.server.broadcast "game_channel", {
+      game: game.stringify,
+      number_of_farms_player_one: game.number_of_farms(game.player_one),
+      number_of_farms_player_two: game.number_of_farms(game.player_two),
+      winner: winner
+    }
+  end
 end

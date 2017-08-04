@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   post '/next_turn', to: 'main#next_turn'
   post '/reinforcement', to: 'main#reinforcement'
   post '/build', to: 'main#build'
+  post '/delete', to: 'main#delete'
 end

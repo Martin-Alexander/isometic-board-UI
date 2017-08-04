@@ -63,12 +63,12 @@ function drawBoard() {
     for (var j = 0; j < boardX; j++) {
       var tile = boardData[i][j];
       if (tile.structure == "farm") {
-        drawTile(tile.x, tile.y, 6);
+        drawTile(tile.y, tile.x, 6);
       } else {
       // if (grassPattern[i][j] == 1) {
       //   drawTile(tile.x, tile.y, 5);
       // } else {
-        drawTile(tile.x, tile.y, 5);
+        drawTile(tile.y, tile.x, 5);
       }
     }
   }
