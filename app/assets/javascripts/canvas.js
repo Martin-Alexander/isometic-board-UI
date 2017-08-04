@@ -21,13 +21,12 @@ function intializeCanvas() {
 
 function setBoard(jsonGameData) {
 
-  boardData = []
+  board.initializeAsEmpty();
 
   xSize = jsonGameData.board.meta_data.x_size
   ySize = jsonGameData.board.meta_data.y_size
 
   for (var y = 0; y < ySize; y++) {
-    boardData.push([]);
     for (var x = 0; x < xSize; x++) {
       jsonSquare = jsonGameData.board.rows[y][x]
       newSquare = new Square();
@@ -46,7 +45,7 @@ function setBoard(jsonGameData) {
         )
         newSquare.pieces.push(newPiece);
       }
-      boardData[boardData.length - 1].push(newSquare);
+      board.square(x, y) = newSquare;
     }
   }
   run();
