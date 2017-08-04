@@ -38,14 +38,14 @@ class Game
         end
       elsif to_square.empty? && from_square.player != to_square.player && from_square.pieces[0].type == :soldier && to_square.structure
         # Pillage
-        to_square.structure = false
-        to_square.player = false
         from_square.inactivate(1)
         if to_square.structure == :farm
           from_square.player.reinforcements += 8
         elsif to_square.structure == :city
           from_square.player.reinforcements += 20
         end
+        to_square.structure = false
+        to_square.player = false
         @winner = winner
       elsif to_square.unowned? || (to_square.active + to_square.inactive < 99 && !from_square.empty? && !to_square.empty? && from_square.pieces[0].type == to_square.pieces[0].type && from_square.player == to_square.player) || (to_square.empty? && to_square.player == from_square.player)
         # Move
