@@ -126,7 +126,8 @@ function initializeMouseListener() {
           game_data: JSON.stringify(gameData),
           key: my_key
         }
-      });       
+      });
+      sourceTile = false;
     }
   });
 

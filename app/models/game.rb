@@ -41,6 +41,11 @@ class Game
         to_square.structure = false
         to_square.player = false
         from_square.inactivate(1)
+        if to_square.structure == :farm
+          from_square.player.reinforcements += 8
+        elsif to_square.structure == :city
+          from_square.player.reinforcements += 20
+        end
         @winner = winner
       elsif to_square.unowned? || (to_square.active + to_square.inactive < 99 && !from_square.empty? && !to_square.empty? && from_square.pieces[0].type == to_square.pieces[0].type && from_square.player == to_square.player) || (to_square.empty? && to_square.player == from_square.player)
         # Move
@@ -127,11 +132,11 @@ class Game
     end
 
     if @player_one.is_turnplayer 
-      @player_one.reinforcements += (@player_one.reinforcements / 10)
+      @player_one.reinforcements += (@player_one.reinforcements / 20)
       @player_one.reinforcements += (number_of_farms(@player_one) / 4)
       @player_one.reinforcements -= number_of_farms(@player_one)
     else
-      @player_two.reinforcements += (@player_two.reinforcements / 10)
+      @player_two.reinforcements += (@player_two.reinforcements / 20)
       @player_two.reinforcements += (number_of_farms(@player_two) / 4)
       @player_two.reinforcements -= number_of_farms(@player_two)
     end
