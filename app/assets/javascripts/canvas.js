@@ -49,7 +49,6 @@ function setBoard(jsonGameData) {
       boardData[boardData.length - 1].push(newSquare);
     }
   }
-  run();
 }
 
 function randomSample(array) {
@@ -72,6 +71,7 @@ function newGame() {
       gameData = data;
       setBoard(gameData);
       setRandomGrassPattern();
+      run();
     }
   });
 }
