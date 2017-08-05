@@ -13,6 +13,10 @@ function Hand() {
     console.log("Click");
   }
 
+  this.render = function() {
+    console.log("Render Hand");
+  }
+
   function closeBox() {
     console.log("Close Box");
   }

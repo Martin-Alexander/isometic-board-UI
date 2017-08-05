@@ -7,8 +7,15 @@ function Board(xSize, ySize) {
   }
 
   this.square = function(x, y) {
-    if (this.data[y]) {
-      return this.data[y][x];
+
+    return this.data[y * ySize + x];
+  }
+
+  this.empty = function() {
+
+    this.data = [];
+    for (var i = 0; i < ySize * xSize; i++) {
+      this.data.push(new Square);
     }
   }
 }

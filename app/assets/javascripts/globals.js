@@ -1,7 +1,5 @@
 var canvas, 
   canvasContext,
-  canvasWidth, 
-  canvasHeight,
   tileImage,
   unitImage,
   shieldImage,
@@ -14,3 +12,6 @@ const tileWidth = 56;
 const tileHeight = 28;
 var grassPattern = [];
 var my_key;
+
+var board = new Board(12, 12);
+var game = new Game;

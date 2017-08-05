@@ -4,13 +4,19 @@ function Game() {
   this.turnNumber = 1;
 
   this.playerOne = {
-    gold: 0,
-    isTurnplayer: true;
+    gold: 4,
+    isTurnplayer: true,
+    numberOfFarms: 20,
+    numberOfCities: 1,
+    income: 4
   }
 
   this.playerTwo = {
     gold: 0,
-    isTurnplayer: false
+    isTurnplayer: false,
+    numberOfFarms: 20,
+    numberOfCities: 1,
+    income: 4
   }
 
   this.board;
