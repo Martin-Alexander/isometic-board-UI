@@ -40,9 +40,9 @@ class Game
         # Pillage
         from_square.inactivate(1)
         if to_square.structure == :farm
-          from_square.player.reinforcements += 8
+          from_square.player.reinforcements += 4
         elsif to_square.structure == :city
-          from_square.player.reinforcements += 20
+          from_square.player.reinforcements += 10
         end
         to_square.structure = false
         to_square.player = false
