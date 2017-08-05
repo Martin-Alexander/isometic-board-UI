@@ -60,6 +60,7 @@ function setGame(jsonGameData) {
   }
 
   game.board = board;
+  game.data = jsonGameData;
 }
 
 // Parses server broadcast into JSON and sets board and game data

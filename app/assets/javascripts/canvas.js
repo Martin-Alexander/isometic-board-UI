@@ -8,7 +8,7 @@ function newGame() {
       // setRandomGrassPattern();
       setBoard(data);
       setGame(data);
-      drawBoard();
+      run();
     }
   });
 }
@@ -23,15 +23,16 @@ function clearCanvas() {
 function run() {
   window.setInterval(function() {
     clearCanvas();
-    drawBoard();
+    board.render();
   }, 30);
 }
 
 $(document).ready(function() {
   intializeCanvas();
   initializeSourceImage();
-  // initializeMouseListener();
+  initializeMouseListener();
   newGame();
+  // board.render();
 
   document.getElementById('canvas').onmousedown = function(){
     return false;

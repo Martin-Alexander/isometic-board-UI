@@ -33,29 +33,26 @@ function Square() {
     }    
   }
 
+  const shieldLookup = {
+    "1": 1,
+    "2": 0
+  }
+
   // Renders the grass and farm of a square
   this.renderBottomLayer = function() {
     
     canvasContext.save();
-    canvasContext.translate((this.x - this.y) * tileWidth / 2, (this.x + this.y) * tileHeight / 2);
+    canvasContext.translate((this.y - this.x) * tileWidth / 2, (this.x + this.y) * tileHeight / 2);
 
     canvasContext.drawImage(
-      // Source
-      tileImage, 
-      // x, y, width, height
-      this.grass * 60, 0, tileWidth, 40,
-      // x, y, width, height
-      -tileWidth / 2, 0, tileWidth, 40
+      tileImage, this.grass * 60, 0, tileWidth, 40,
+                  -tileWidth / 2, 0, tileWidth, 40
     );
 
-    if (this.structure == "farm" && this.player) { 
+    if (this.structure == "farm") { 
       canvasContext.drawImage(
-        // Source
-        structureImage,
-        // x, y, width, height
-        structureLookup[this.player.toString()][this.structure] * 56, 0, tileWidth, 40,
-        // x, y, width, height
-        -tileWidth / 2, 0, tileWidth, 40
+        structureImage, structureLookup[this.player.toString()][this.structure] * 56, 0, tileWidth, 40,
+                        -tileWidth / 2, 0, tileWidth, 40
       );    
     }
 
@@ -65,17 +62,33 @@ function Square() {
   // Render the city and units of a square
   this.renderTopLayer = function() {
     canvasContext.save();
-    canvasContext.translate((this.x - this.y) * tileWidth / 2, (this.x + this.y) * tileHeight / 2);
+    canvasContext.translate((this.y - this.x) * tileWidth / 2, (this.x + this.y) * tileHeight / 2);
+
+    if (this.structure == "city") {
+      canvasContext.drawImage(
+        structureImage, structureLookup[this.player.toString()][this.structure] * 56, 0, tileWidth, 40,
+                        -tileWidth / 2, 0, tileWidth, 40
+      );        
+    }
 
     if (this.units.length > 0) {
       canvasContext.drawImage(
-        // Source
-        unitImage, 
-        // x, y, width, height
-        unitLookup[this.player.toString()]["soldier"] * 60, 0, tileWidth, 40,
-        // x, y, width, height
-        -tileWidth / 2, 0, tileWidth, 40
+        unitImage, unitLookup[this.player.toString()]["soldier"] * tileWidth, 0, tileWidth, unitImage.height,
+                    -tileWidth / 2 + 3, -10, tileWidth - 8, unitImage.height - 8
       );
+
+      canvasContext.drawImage(shieldImage, 28, 0, 14, tileImage.height,
+                                          4, -8, 14, tileImage.height - 2);
+      canvasContext.fillStyle = "black";
+      canvasContext.font = "9px monospace";
+      canvasContext.fillText(10, 5, 2);
+
+
+      canvasContext.drawImage(shieldImage, shieldLookup[this.player.toString()] * 14, 0, 14, tileImage.height,
+                                          -1, 4, 14, tileImage.height - 2);
+      canvasContext.fillStyle = "white";
+      canvasContext.font = "9px monospace";
+      canvasContext.fillText(10, 0, 14);
     }
 
     canvasContext.restore();
@@ -98,13 +111,5 @@ function Square() {
     }
 
     return counter;
-  }
-
-  function renderTile() {
-
-  }
-
-  function renderStructure() {
-
   }
 }

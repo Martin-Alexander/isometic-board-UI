@@ -20,4 +20,7 @@ function Game() {
   }
 
   this.board;
+
+  // To send back to the server... 'cause the server is stateless
+  this.data;
 }
