@@ -3,7 +3,7 @@ class MainController < ApplicationController
   end
 
   def new
-    player_one = Player.new(1, true, 5)
+    player_one = Player.new(1, true, 4)
     player_two = Player.new(2, false, 0)
     board = Board.new(12, 12)
     board.initial_setup(player_one, player_two)
