@@ -28,23 +28,25 @@ function setBoard(jsonGameData) {
 
   for (var y = 0; y < ySize; y++) {
     for (var x = 0; x < xSize; x++) {
+
       jsonSquare = jsonGameData.board.rows[y][x]
       newSquare = new Square();
+      
       newSquare.x = jsonSquare.x;
       newSquare.y = jsonSquare.y;
       newSquare.player = jsonSquare.player;
       newSquare.structure = jsonSquare.structure;
-      newSquare.pieces = [];
-      newSquare.active = jsonSquare.active;
-      newSquare.inactive = jsonSquare.inactive;
 
       for (var i = 0; i < jsonSquare.pieces.length; i++) {
-        newPiece = new Piece(
-          jsonSquare.pieces[0].type,
-          jsonSquare.pieces[0].active
-        )
+
+        newPiece = new Unit()
+
+        newPiece.square = newSquare;
+        newPiece.type = jsonSquare.pieces[0].type;
+        newPiece.active = jsonSquare.pieces[0].active;
         newSquare.pieces.push(newPiece);
       }
+
       board.square(x, y) = newSquare;
     }
   }
