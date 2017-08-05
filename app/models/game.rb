@@ -47,7 +47,22 @@ class Game
         to_square.structure = false
         to_square.player = false
         @winner = winner
-      elsif to_square.unowned? || (to_square.active + to_square.inactive < 99 && !from_square.empty? && !to_square.empty? && from_square.pieces[0].type == to_square.pieces[0].type && from_square.player == to_square.player) || (to_square.empty? && to_square.player == from_square.player)
+      elsif 
+        # Destination square in empty and unowned
+        to_square.unowned? || 
+        # Moving won't 
+        (
+          to_square.active + to_square.inactive < 99 && 
+          !from_square.empty? && 
+          !to_square.empty? && 
+          from_square.pieces[0].type == to_square.pieces[0].type && 
+          from_square.player == to_square.player
+        ) || 
+
+        (
+          to_square.empty? && 
+          to_square.player == from_square.player
+        )
         # Move
         if amount == "all"
           number = from_square.active

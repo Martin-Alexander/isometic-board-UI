@@ -14,4 +14,4 @@ var my_key;
 
 var board = new Board(12, 12);
 var game = new Game;
-var hand = new Hand;
+
